@@ -1,25 +1,30 @@
 package RunTestCourier;
-
 import Courier.Courier;
 import api.CourierAPI;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
-import io.restassured.RestAssured;
+
 import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import Courier.RandomCourier;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 
 public class RunCreateCourierTest {
-    CourierAPI courierAPI = new CourierAPI();
-    Courier courier = new Courier("PNatalia", "1234", "Natalia");
-    private int courierId;
+    protected  final RandomCourier randomCourier = new RandomCourier();
+    private CourierAPI courierAPI;
+    private Courier courier;
+
+    int courierId;
+
     @Before
-    public void setUp() {
-        RestAssured.baseURI = "https://qa-scooter.praktikum-services.ru/";
+    public void setUp(){
+        courierAPI = new CourierAPI();
+        courier = randomCourier.createRandomCourier();
     }
 
     @After
@@ -41,6 +46,7 @@ public class RunCreateCourierTest {
     @DisplayName("Create again courier")
     @Description("Создание существующего курьера в системе")
     public void createAgainCourierTest(){
+        courierAPI.createCourier(courier);
         Response response = courierAPI.createCourier(courier).then().statusCode(409).extract().response();
         assertThat(response.body().jsonPath().get("message"), equalTo("Этот логин уже используется. Попробуйте другой."));
     }

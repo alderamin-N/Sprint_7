@@ -12,16 +12,20 @@ public class Order {
     private String comment;
     private String[] color;
 
-    public Order(String firstName, String lastName, String address, String metroStation, String phone, Number rentTime, String deliveryDate, String comment, String[] color){
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.metroStation = metroStation;
-        this.phone = phone;
-        this.rentTime = rentTime;
-        this.deliveryDate = deliveryDate;
-        this.comment = comment;
+    public Order(   String[] color){
+        this.firstName = "Natalia";
+        this.lastName = "Pototskaia";
+        this.address = "Address";
+        this.metroStation = "Lesnay";
+        this.phone = "8-965-965-96-96";
+        this.rentTime = 4;
+        this.deliveryDate = "2024-03-30";
+        this.comment = "my comment";
         this.color = color;
+    }
+
+    public Order(){
+
     }
 
     public String getFirstName() {
